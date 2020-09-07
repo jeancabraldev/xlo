@@ -5,15 +5,23 @@ import 'package:flutter/services.dart';
 class TextFormFieldWidget extends StatelessWidget {
   TextFormFieldWidget({
     this.textInputType,
-    this.icon,
+    this.iconPre,
+    this.iconSuf,
     this.obscureText = false,
     this.autocorrect = true,
+    this.onChanged,
+    this.errorText,
+    this.enabled,
   });
 
   final TextInputType textInputType;
-  final IconData icon;
+  final IconData iconPre;
+  final Widget iconSuf;
   final bool obscureText;
   final bool autocorrect;
+  final ValueChanged<String> onChanged;
+  final String errorText;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +30,15 @@ class TextFormFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         isDense: true,
-        prefixIcon: Icon(icon),
+        prefixIcon: Icon(iconPre),
+        suffixIcon: iconSuf,
+        errorText: errorText,
       ),
       keyboardType: textInputType,
       obscureText: obscureText,
       autocorrect: autocorrect,
+      onChanged: onChanged,
+      enabled: enabled,
     );
   }
 }

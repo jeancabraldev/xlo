@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:xlo/components/iconButton/icon_button.dart';
 import 'package:xlo/components/raisedButton/raised_button.dart';
 import 'package:xlo/components/textFormField/text_form_field.dart';
 import 'package:xlo/screens/signUp/signup_screen.dart';
+import 'package:xlo/stores/login_store.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginScreen extends StatelessWidget {
+  final LoginStore loginStore = LoginStore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +30,8 @@ class LoginScreen extends StatelessWidget {
               elevation: 3,
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
@@ -39,7 +45,8 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 3, bottom: 4, top: 12),
+                      padding:
+                          const EdgeInsets.only(left: 3, bottom: 4, top: 12),
                       child: Text(
                         'E-mail',
                         style: TextStyle(
@@ -48,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     TextFormFieldWidget(
-                      icon: FontAwesomeIcons.solidEnvelope,
+                      iconPre: FontAwesomeIcons.solidEnvelope,
                       textInputType: TextInputType.emailAddress,
                       autocorrect: false,
                     ),
@@ -76,15 +83,27 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    TextFormFieldWidget(
-                      icon: FontAwesomeIcons.lock,
-                      textInputType: TextInputType.visiblePassword,
-                      obscureText: true,
-                    ),
+                    Observer(builder: (_) {
+                      return TextFormFieldWidget(
+                        iconPre: FontAwesomeIcons.lock,
+                        iconSuf: IconButtonWidget(
+                          radius: 32,
+                          icon: loginStore.passwordVisible
+                              ? FontAwesomeIcons.eyeSlash
+                              : FontAwesomeIcons.eye,
+                          onTap: loginStore.togglePasswordVisibility,
+                        ),
+                        textInputType: TextInputType.visiblePassword,
+                        obscureText: !loginStore.passwordVisible,
+                      );
+                    }),
                     RaisedButtonWidget(
                       onPressed: () {},
                       colorButton: Colors.deepOrangeAccent,
-                      textButton: 'ENTRAR',
+                      textButton: Text(
+                        'ENTRAR',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       textColorButton: Colors.white,
                     ),
                     const SizedBox(height: 16),

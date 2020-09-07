@@ -7,12 +7,14 @@ class RaisedButtonWidget extends StatelessWidget {
     this.colorButton,
     this.textButton,
     this.textColorButton,
+    this.disabledColor,
   });
 
   final VoidCallback onPressed;
   final Color colorButton;
-  final String textButton;
+  final Widget textButton;
   final Color textColorButton;
+  final Color disabledColor;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +28,8 @@ class RaisedButtonWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Text(
-          textButton,
-          style: TextStyle(
-            color: textColorButton,
-          ),
-        ),
+        disabledColor: disabledColor,
+        child: textButton,
       ),
     );
   }
