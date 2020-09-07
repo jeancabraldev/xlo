@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:xlo/components/errorBox/error_box.dart';
 import 'package:xlo/components/iconButton/icon_button.dart';
 import 'package:xlo/components/raisedButton/raised_button.dart';
 import 'package:xlo/components/textFormField/text_form_field.dart';
@@ -37,6 +38,11 @@ class SignUpScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Observer(builder: (_){
+                      return ErrorBox(
+                      message: signupStore.error,
+                      );
+                    }),
                     FieldTitleWidget(
                       title: 'Apelido',
                       subTitle: 'Esse apelido aparecerá nos anúncios',

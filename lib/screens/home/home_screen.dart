@@ -9,6 +9,8 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         drawer: DrawerWidget(),
         appBar: AppBar(
+          title: const Text('XLO'),
+          centerTitle: true,
         ),
       ),
     );

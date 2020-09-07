@@ -1,12 +1,13 @@
 import 'package:mobx/mobx.dart';
 import 'package:xlo/helpers/extensions.dart';
+import 'package:xlo/models/user.dart';
+import 'package:xlo/repositories/user_repository.dart';
 
 part 'signup_store.g.dart';
 
 class SignupStore = _SignupStore with _$SignupStore;
 
 abstract class _SignupStore with Store {
-
   //name
   @observable
   String name;
@@ -75,7 +76,7 @@ abstract class _SignupStore with Store {
   void setPassword(String value) => password = value;
 
   @computed
-  bool get passwordValid => password != null && password.length > 6;
+  bool get passwordValid => password != null && password.length > 5;
 
   String get passwordError {
     if (password == null || passwordValid) {
@@ -137,11 +138,26 @@ abstract class _SignupStore with Store {
   @observable
   bool loading = false;
 
+  //Exibindo erros
+  @observable
+  String error;
+
   @action
   Future<void> _signUp() async {
     loading = true;
 
-    await Future.delayed(Duration(seconds: 5));
+    final user = User(
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    );
+
+    try {
+      await UserRepository().singUp(user);
+    } catch (e) {
+      error = e;
+    }
 
     loading = false;
   }
