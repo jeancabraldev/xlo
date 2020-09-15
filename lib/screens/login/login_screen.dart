@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:xlo/components/errorBox/error_box.dart';
 import 'package:xlo/components/iconButton/icon_button.dart';
 import 'package:xlo/components/raisedButton/raised_button.dart';
 import 'package:xlo/components/textFormField/text_form_field.dart';
 import 'package:xlo/screens/signUp/signup_screen.dart';
 import 'package:xlo/stores/login_store.dart';
 
-// ignore: use_key_in_widget_constructors
 class LoginScreen extends StatelessWidget {
   final LoginStore loginStore = LoginStore();
 
@@ -44,6 +44,13 @@ class LoginScreen extends StatelessWidget {
                         color: Colors.grey[700],
                       ),
                     ),
+                    Observer(
+                      builder: (_){
+                        return ErrorBox(
+                          message: loginStore.error,
+                        );
+                      },
+                    ),
                     Padding(
                       padding:
                           const EdgeInsets.only(left: 3, bottom: 4, top: 12),
@@ -54,11 +61,16 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TextFormFieldWidget(
-                      iconPre: FontAwesomeIcons.solidEnvelope,
-                      textInputType: TextInputType.emailAddress,
-                      autocorrect: false,
-                    ),
+                    Observer(builder: (_) {
+                      return TextFormFieldWidget(
+                        iconPre: FontAwesomeIcons.solidEnvelope,
+                        textInputType: TextInputType.emailAddress,
+                        autocorrect: false,
+                        errorText: loginStore.emailError,
+                        onChanged: loginStore.setEmail,
+                        enabled: !loginStore.loading,
+                      );
+                    }),
                     const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.only(left: 3, bottom: 4),
@@ -89,22 +101,35 @@ class LoginScreen extends StatelessWidget {
                         iconSuf: IconButtonWidget(
                           radius: 32,
                           icon: loginStore.passwordVisible
-                              ? FontAwesomeIcons.eyeSlash
-                              : FontAwesomeIcons.eye,
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
                           onTap: loginStore.togglePasswordVisibility,
                         ),
                         textInputType: TextInputType.visiblePassword,
                         obscureText: !loginStore.passwordVisible,
+                        errorText: loginStore.passwordError,
+                        onChanged: loginStore.setPassword,
+                        enabled: !loginStore.loading,
                       );
                     }),
-                    RaisedButtonWidget(
-                      onPressed: () {},
-                      colorButton: Colors.deepOrangeAccent,
-                      textButton: Text(
-                        'ENTRAR',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      textColorButton: Colors.white,
+                    Observer(
+                      builder: (_) {
+                        return RaisedButtonWidget(
+                          onPressed: loginStore.loginPressed,
+                          colorButton: Colors.deepOrangeAccent,
+                          disabledColor: Colors.deepOrangeAccent.withAlpha(110),
+                          textButton: loginStore.loading
+                              ? CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
+                              : Text(
+                                  'ENTRAR',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                          textColorButton: Colors.white,
+                        );
+                      },
                     ),
                     const SizedBox(height: 16),
                     const Divider(color: Colors.grey),

@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:xlo/screens/login/login_screen.dart';
+import 'package:xlo/stores/user_manager_store.dart';
+import 'package:xlo/stores/page_store.dart';
 
-// ignore: use_key_in_widget_constructors
 class DrawerHeaderWidget extends StatelessWidget {
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pop();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => LoginScreen(),
-          ),
-        );
+        if (userManagerStore.isLoggedIn) {
+          GetIt.I<PageStore>().setPage(4);
+        } else {
+          Navigator.of(context).pop();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => LoginScreen(),
+            ),
+          );
+        }
       },
       child: Container(
         color: Colors.deepPurpleAccent,
@@ -31,9 +39,11 @@ class DrawerHeaderWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
-                    'Acesse sua conta',
+                    userManagerStore.isLoggedIn
+                        ? userManagerStore.user.name
+                        : 'Acesse sua conta',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -41,7 +51,9 @@ class DrawerHeaderWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'clique Aqui',
+                    userManagerStore.isLoggedIn
+                        ? userManagerStore.user.email
+                        : 'clique Aqui',
                     style: TextStyle(color: Colors.white),
                   ),
                 ],

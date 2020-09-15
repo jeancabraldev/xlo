@@ -38,9 +38,9 @@ class SignUpScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Observer(builder: (_){
+                    Observer(builder: (_) {
                       return ErrorBox(
-                      message: signupStore.error,
+                        message: signupStore.error,
                       );
                     }),
                     FieldTitleWidget(
@@ -79,25 +79,40 @@ class SignUpScreen extends StatelessWidget {
                         subTitle: 'Proteja sua conta',
                       ),
                     ),
-                    Observer(builder: (_) {
+                    Observer(
+                      builder: (_) {
+                        return TextFormFieldWidget(
+                          iconPre: FontAwesomeIcons.phoneAlt,
+                          errorText: signupStore.phoneError,
+                          textInputType: TextInputType.phone,
+                          onChanged: signupStore.setPhone,
+                          enabled: !signupStore.loading,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            TelefoneInputFormatter(),
+                          ],
+                        );
+                      },
+                    ),
+/*                    Observer(builder: (_) {
                       return TextFormField(
                         style: TextStyle(color: Colors.grey[700]),
                         autocorrect: false,
                         decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          isDense: true,
-                          errorText: signupStore.phoneError,
-                          prefixIcon: const Icon(FontAwesomeIcons.phoneAlt),
+                        border: const OutlineInputBorder(),
+                        isDense: true,
+                        errorText: signupStore.phoneError,
+                        prefixIcon: const Icon(FontAwesomeIcons.phoneAlt),
                         ),
                         keyboardType: TextInputType.phone,
                         inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          FilteringTextInputFormatter.digitsOnly,
                           TelefoneInputFormatter(),
                         ],
                         onChanged: signupStore.setPhone,
                         enabled: !signupStore.loading,
                       );
-                    }),
+                    }),*/
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: FieldTitleWidget(
@@ -111,8 +126,8 @@ class SignUpScreen extends StatelessWidget {
                         iconSuf: IconButtonWidget(
                           radius: 32,
                           icon: signupStore.passwordVisible
-                              ? FontAwesomeIcons.eyeSlash
-                              : FontAwesomeIcons.eye,
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
                           onTap: signupStore.togglePasswordVisibility,
                         ),
                         textInputType: TextInputType.visiblePassword,
@@ -135,8 +150,8 @@ class SignUpScreen extends StatelessWidget {
                         iconSuf: IconButtonWidget(
                           radius: 32,
                           icon: signupStore.confirmPasswordVisible
-                              ? FontAwesomeIcons.eyeSlash
-                              : FontAwesomeIcons.eye,
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
                           onTap: signupStore.toggleConfirmPasswordVisibility,
                         ),
                         textInputType: TextInputType.visiblePassword,

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:xlo/screens/base/base_screen.dart';
 import 'package:xlo/stores/page_store.dart';
+import 'package:xlo/stores/user_manager_store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,7 @@ Future<void> main() async {
 //Localizando serviços do aplicativo
 void setupLocators() {
   GetIt.I.registerSingleton(PageStore());
+  GetIt.I.registerSingleton(UserManagerStore());
 }
 
 //Inicializando servidor de banco de dados

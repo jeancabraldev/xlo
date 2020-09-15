@@ -12,6 +12,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.onChanged,
     this.errorText,
     this.enabled,
+    this.inputFormatters,
   });
 
   final TextInputType textInputType;
@@ -22,6 +23,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final String errorText;
   final bool enabled;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class TextFormFieldWidget extends StatelessWidget {
       autocorrect: autocorrect,
       onChanged: onChanged,
       enabled: enabled,
+      inputFormatters: inputFormatters,
     );
   }
 }
