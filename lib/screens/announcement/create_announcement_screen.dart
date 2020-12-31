@@ -4,18 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xlo/components/drawer/drawer_widget.dart';
 import 'package:xlo/screens/announcement/components/images_field.dart';
+import 'package:xlo/stores/create_store.dart';
 
 import 'components/text_form_field_announcement.dart';
 
 class CreateAnnouncementScreen extends StatelessWidget {
+  final CreateStore createStore = CreateStore();
+
   @override
   Widget build(BuildContext context) {
-    final labelStyle = TextStyle(
-      color: Colors.grey,
-      fontSize: 16,
-    );
-
-    final contentPAdding = const EdgeInsets.fromLTRB(16, 10, 12, 10);
     return Scaffold(
       drawer: DrawerWidget(),
       appBar: AppBar(
@@ -32,7 +29,7 @@ class CreateAnnouncementScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ImagesField(),
+            ImagesField(createStore),
             TextFormFieldAnnouncement(labelText: 'Título'),
             TextFormFieldAnnouncement(
               labelText: 'Descrição',

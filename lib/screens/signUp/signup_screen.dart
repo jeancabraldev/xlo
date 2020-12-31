@@ -170,7 +170,7 @@ class SignUpScreen extends StatelessWidget {
                                     AlwaysStoppedAnimation(Colors.white),
                               )
                             : Text(
-                                'ENTRAR',
+                                'Criar Conta',
                                 style: TextStyle(color: Colors.white),
                               ),
                         textColorButton: Colors.white,

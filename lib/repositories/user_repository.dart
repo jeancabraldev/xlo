@@ -1,4 +1,4 @@
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo/models/user.dart';
 import 'package:xlo/repositories/parse_errors.dart';
 import 'package:xlo/repositories/table_keys.dart';
