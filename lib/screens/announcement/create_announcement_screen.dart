@@ -6,6 +6,7 @@ import 'package:xlo/components/drawer/drawer_widget.dart';
 import 'package:xlo/screens/announcement/components/images_field.dart';
 import 'package:xlo/stores/create_store.dart';
 
+import 'components/category_field.dart';
 import 'components/text_form_field_announcement.dart';
 
 class CreateAnnouncementScreen extends StatelessWidget {
@@ -39,6 +40,7 @@ class CreateAnnouncementScreen extends StatelessWidget {
                 RealInputFormatter(centavos: true),
               ],
             ),
+            CategoryField(createStore),
             TextFormFieldAnnouncement(
               labelText: 'Valor',
               prefixText: 'R\$ ',
