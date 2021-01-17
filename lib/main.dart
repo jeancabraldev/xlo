@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:xlo/repositories/ibge_repository.dart';
 import 'package:xlo/screens/base/base_screen.dart';
 import 'package:xlo/stores/category_store.dart';
 import 'package:xlo/stores/page_store.dart';
@@ -12,6 +13,8 @@ Future<void> main() async {
   await initializeParse();
   setupLocators();
   runApp(MyApp());
+
+  IBGERepository().getUFList().then((value) {});
 }
 
 //Localizando serviços do aplicativo
